@@ -1,0 +1,47 @@
+---
+output: 
+  html_document:
+    include:
+      after_body: footer.html
+knit: (function(inputFile, encoding) { 
+      out_dir <- 'docs';
+      rmarkdown::render(inputFile,
+                        encoding=encoding, 
+                        output_file=file.path(dirname(inputFile), out_dir, 'index.html')) })
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE, warning=F}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE)
+library(tidyverse)
+library(lingtypology)
+```
+
+###  Non semantically motivated Noun Classes {.tabset .tabset-fade .tabset-pills}
+
+#### about database
+Here is a map of the languages from database and number of nouns for each language:
+```{r}
+db <- read_csv("database.csv") 
+db %>% 
+  count(language) %>% 
+  mutate(label = paste(language, n)) ->
+  df_map
+map.feature(df_map$language,
+            label = df_map$label,
+            label.hide = FALSE)
+```
+
+#### search
+```{r}
+DT::datatable(db[,c(1:2, 4, 6, 7)], filter = 'top', rownames = FALSE, options = list(pageLength = 20, dom = 'tip'), escape = FALSE)
+```
+
+#### bibliography
+```{r}
+db %>% 
+  distinct(language, lect, contributor, source) %>% 
+  DT::datatable(filter = 'top', rownames = FALSE, options = list(pageLength = 20, dom = 'tip'), escape = FALSE)
+```
+
