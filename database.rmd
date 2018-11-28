@@ -35,7 +35,7 @@ map.feature(df_map$language,
 
 #### search
 ```{r}
-DT::datatable(db[,c(1:2, 4, 6, 7)], filter = 'top', rownames = FALSE, options = list(pageLength = 20, dom = 'tip'), escape = FALSE)
+DT::datatable(db, filter = 'top', rownames = FALSE, options = list(pageLength = 20, dom = 'tip'), escape = FALSE)
 ```
 
 #### bibliography
